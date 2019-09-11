@@ -118,6 +118,14 @@ canvas.addEventListener("click", event => {
     drawCanvas();
 });
 
+canvas.addEventListener("mousemove", event => {
+    if (event.buttons === 1) {
+        const pos = getEventPos(event);
+        universe.set_cell_alive(pos.row, pos.col);
+        drawCanvas();
+    }
+});
+
 let animationId = null;
 
 const isPaused = () => {

@@ -185,6 +185,11 @@ impl Universe {
         self.cells[idx].toggle();
     }
 
+    pub fn set_cell_alive(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells[idx] = Cell::Alive;
+    }
+
     pub fn initialize(&mut self) {
         for (i, c) in self.cells.iter_mut().enumerate() {
             if i % 2 == 0 || i % 7 == 0 {
