@@ -1,8 +1,11 @@
 [package]
 name = "wasm-game-of-life"
+description = "Game of Life using Rust and WebAssembly"
 version = "0.1.0"
-authors = ["Sven Neumann <neumann@teufel.de>"]
+authors = ["Sven Neumann <sven@svenfoo.org>"]
+license = "Apache-2.0"
 edition = "2018"
+repository = "https://github.com/svenfoo/wasm-game-of-life"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -28,6 +31,7 @@ wee_alloc = { version = "0.4.2", optional = true }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.2"
+liquid = "0.18.2"
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.
