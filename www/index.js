@@ -13,6 +13,9 @@ const universe = Universe.new(64, 64);
 const width = universe.width();
 const height = universe.height();
 
+// Initialize it to some interesting state
+universe.initialize();
+
 // Give the canvas room for all of our cells and a 1px border
 // around each of them.
 const canvas = document.getElementById("game-of-life-canvas");

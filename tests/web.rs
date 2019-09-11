@@ -29,10 +29,24 @@ pub fn expected_spaceship() -> Universe {
     universe
 }
 
+#[cfg(test)]
+pub fn empty_universe() -> Universe {
+    let universe = Universe::new(6, 6);
+    universe
+}
+
 #[wasm_bindgen_test]
 pub fn test_tick() {
     let mut input_universe = input_spaceship();
     let expected_universe = expected_spaceship();
     input_universe.tick();
+    assert_eq!(&input_universe, &expected_universe);
+}
+
+#[wasm_bindgen_test]
+pub fn test_clear() {
+    let mut input_universe = input_spaceship();
+    let expected_universe = empty_universe();
+    input_universe.clear();
     assert_eq!(&input_universe, &expected_universe);
 }

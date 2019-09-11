@@ -124,6 +124,21 @@ impl Universe {
 /// Public methods, exported to JavaScript.
 #[wasm_bindgen]
 impl Universe {
+    pub fn new(width : u32, height : u32) -> Universe {
+        utils::set_panic_hook();
+
+        assert!(width > 0);
+        assert!(height > 0);
+
+        let cells = vec!(Cell::Dead; width as usize * height as usize);
+
+        Universe {
+            width,
+            height,
+            cells,
+        }
+    }
+
     pub fn tick(&mut self) {
         let mut next = self.cells.clone();
 
@@ -157,29 +172,6 @@ impl Universe {
         self.cells = next;
     }
 
-    pub fn new(width : u32, height : u32) -> Universe {
-        utils::set_panic_hook();
-
-        assert!(width > 0);
-        assert!(height > 0);
-
-        let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
-                    Cell::Alive
-                } else {
-                    Cell::Dead
-                }
-            })
-            .collect();
-
-        Universe {
-            width,
-            height,
-            cells,
-        }
-    }
-
     pub fn render(&self) -> String {
         self.to_string()
     }
@@ -201,4 +193,17 @@ impl Universe {
         self.cells[idx].toggle();
     }
 
+    pub fn initialize(&mut self) {
+        for (i, c) in self.cells.iter_mut().enumerate() {
+            if i % 2 == 0 || i % 7 == 0 {
+                *c = Cell::Alive
+            } else {
+                *c = Cell::Dead
+            }
+        };
+    }
+
+    pub fn clear(&mut self) {
+        self.cells.iter_mut().map(|i| *i = Cell::Dead).count();
+    }
 }
