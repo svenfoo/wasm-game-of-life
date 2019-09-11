@@ -28,6 +28,7 @@ impl Cell {
 
 
 #[wasm_bindgen]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Universe {
     width: u32,
     height: u32,
@@ -110,14 +111,9 @@ impl fmt::Display for Universe {
 
 /// Methods added for tests
 impl Universe {
-    /// Get the dead and alive values of the entire universe.
-    pub fn get_cells(&self) -> &[Cell] {
-        &self.cells
-    }
-
     /// Set cells to be alive in a universe by passing the row and column
     /// of each cell as an array.
-    pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
+    pub fn set_cells_alive(&mut self, cells: &[(u32, u32)]) {
         for (row, col) in cells.iter() {
             let idx = self.get_index(*row, *col);
             self.cells[idx] = Cell::Alive;
