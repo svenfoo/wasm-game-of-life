@@ -121,8 +121,9 @@ canvas.addEventListener("click", event => {
 canvas.addEventListener("mousemove", event => {
     if (event.buttons === 1) {
         const pos = getEventPos(event);
-        universe.set_cell_alive(pos.row, pos.col);
-        drawCanvas();
+        if (universe.set_cell_alive(pos.row, pos.col)) {
+            drawCanvas();
+        }
     }
 });
 

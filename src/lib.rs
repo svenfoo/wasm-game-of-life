@@ -1,6 +1,7 @@
 mod utils;
 
 use std::fmt;
+use std::mem;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -23,6 +24,10 @@ impl Cell {
             Cell::Dead => Cell::Alive,
             Cell::Alive => Cell::Dead,
         };
+    }
+
+    fn set_alive(&mut self) -> bool {
+        Cell::Dead == mem::replace(self, Self::Alive)
     }
 }
 
@@ -185,9 +190,9 @@ impl Universe {
         self.cells[idx].toggle();
     }
 
-    pub fn set_cell_alive(&mut self, row: u32, column: u32) {
+    pub fn set_cell_alive(&mut self, row: u32, column: u32) -> bool {
         let idx = self.get_index(row, column);
-        self.cells[idx] = Cell::Alive;
+        self.cells[idx].set_alive()
     }
 
     pub fn initialize(&mut self) {
