@@ -121,8 +121,8 @@ const isPaused = () => {
 };
 
 const renderLoop = () => {
-    drawCanvas();
     universe.tick();
+    drawCanvas();
     animationId = requestAnimationFrame(renderLoop);
 };
 
