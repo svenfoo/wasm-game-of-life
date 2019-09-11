@@ -140,11 +140,24 @@ const pause = () => {
 };
 
 playPauseButton.addEventListener("click", event => {
-    if (isPaused()) {
-        play();
-    } else {
-        pause();
-    }
+    if (isPaused()) { play(); } else { pause(); }
 });
+
+const next = () => {
+    universe.tick();
+    drawCanvas();
+}
+
+const nextButton = document.getElementById("next");
+nextButton.addEventListener("click", event => { next(); });
+
+const clear = () => {
+    universe.clear();
+    drawCanvas();
+}
+
+const clearButton = document.getElementById("clear");
+clearButton.addEventListener("click", event => { clear(); });
+
 
 play();
