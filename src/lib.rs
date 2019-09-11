@@ -43,17 +43,9 @@ impl Universe {
     fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
         let mut count = 0;
 
-        let north = if row == 0 {
-            self.height - 1
-        } else {
-            row - 1
-        };
+        let north = if row == 0 { self.height - 1 } else { row - 1 };
 
-        let south = if row == self.height - 1 {
-            0
-        } else {
-            row + 1
-        };
+        let south = if row == self.height - 1 { 0 } else { row + 1 };
 
         let west = if column == 0 {
             self.width - 1
@@ -124,13 +116,13 @@ impl Universe {
 /// Public methods, exported to JavaScript.
 #[wasm_bindgen]
 impl Universe {
-    pub fn new(width : u32, height : u32) -> Universe {
+    pub fn new(width: u32, height: u32) -> Universe {
         utils::set_panic_hook();
 
         assert!(width > 0);
         assert!(height > 0);
 
-        let cells = vec!(Cell::Dead; width as usize * height as usize);
+        let cells = vec![Cell::Dead; width as usize * height as usize];
 
         Universe {
             width,
@@ -200,7 +192,7 @@ impl Universe {
             } else {
                 *c = Cell::Dead
             }
-        };
+        }
     }
 
     pub fn clear(&mut self) {
