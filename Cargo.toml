@@ -29,9 +29,12 @@ console_error_panic_hook = { version = "0.1.1", optional = true }
 # Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
 wee_alloc = { version = "0.4.2", optional = true }
 
+# We do not directly depend on this, but try to force a recent version in an
+# attempt to fix the Travis CI builds.
+liquid = "0.18.2"
+
 [dev-dependencies]
 wasm-bindgen-test = "0.2"
-liquid = "0.18.2"
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.
