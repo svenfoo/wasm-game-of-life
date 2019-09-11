@@ -14,14 +14,13 @@ matrix:
     env: RUST_BACKTRACE=1
     addons:
       firefox: latest
-      chrome: stable
     before_script:
       - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
       - cargo install-update -a
       - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
     script:
       - wasm-pack build
-      - wasm-pack test --chrome --firefox --headless
+      - wasm-pack test --firefox --headless
 
   # Builds on nightly.
   - rust: nightly
