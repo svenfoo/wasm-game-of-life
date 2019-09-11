@@ -1,6 +1,8 @@
 ## Game of Life
 ### using Rust 🦀 and WebAssembly 🕸
 
+[![Build Status](https://travis-ci.org/svenfoo/wasm-game-of-life.svg?branch=master)](https://travis-ci.org/svenfoo/wasm-game-of-life)
+
 This is based on the [nice tutorial][tutorial] on how to use Rust and WebAssembly together.
 
 [tutorial]: https://rustwasm.github.io/docs/book/introduction.html
