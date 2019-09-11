@@ -108,6 +108,23 @@ impl fmt::Display for Universe {
     }
 }
 
+/// Methods added for tests
+impl Universe {
+    /// Get the dead and alive values of the entire universe.
+    pub fn get_cells(&self) -> &[Cell] {
+        &self.cells
+    }
+
+    /// Set cells to be alive in a universe by passing the row and column
+    /// of each cell as an array.
+    pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
+        for (row, col) in cells.iter() {
+            let idx = self.get_index(*row, *col);
+            self.cells[idx] = Cell::Alive;
+        }
+    }
+}
+
 /// Public methods, exported to JavaScript.
 #[wasm_bindgen]
 impl Universe {
@@ -144,11 +161,11 @@ impl Universe {
         self.cells = next;
     }
 
-    pub fn new() -> Universe {
+    pub fn new(width : u32, height : u32) -> Universe {
         utils::set_panic_hook();
 
-        let width = 64;
-        let height = 64;
+        assert!(width > 0);
+        assert!(height > 0);
 
         let cells = (0..width * height)
             .map(|i| {
