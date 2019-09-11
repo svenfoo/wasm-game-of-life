@@ -97,7 +97,7 @@ const drawCanvas = () => {
     drawCells();
 };
 
-canvas.addEventListener("click", event => {
+function getEventPos(event) {
     const boundingRect = canvas.getBoundingClientRect();
 
     const scaleX = canvas.width / boundingRect.width;
@@ -109,8 +109,12 @@ canvas.addEventListener("click", event => {
     const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
     const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
 
-    universe.toggle_cell(row, col);
+    return { row: row, col: col };
+};
 
+canvas.addEventListener("click", event => {
+    const pos = getEventPos(event);
+    universe.toggle_cell(pos.row, pos.col);
     drawCanvas();
 });
 
