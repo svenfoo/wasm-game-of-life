@@ -139,15 +139,15 @@ const renderLoop = () => {
     animationId = requestAnimationFrame(renderLoop);
 };
 
-const playPauseButton = document.getElementById("play-pause");
+const playPauseIcon = document.getElementById("icon-play-pause");
 
 const play = () => {
-    playPauseButton.textContent = "⏸";
+    playPauseIcon.textContent = "pause";
     renderLoop();
 };
 
 const pause = () => {
-    playPauseButton.textContent = "▶";
+    playPauseIcon.textContent = "play_arrow";
     cancelAnimationFrame(animationId);
     animationId = null;
 };
@@ -160,6 +160,7 @@ const playPause = () => {
     }
 }
 
+const playPauseButton = document.getElementById("button-play-pause");
 playPauseButton.addEventListener("click", event => { playPause(); });
 
 window.addEventListener("keydown", event => {
@@ -179,7 +180,7 @@ const next = () => {
     drawCanvas();
 }
 
-const nextButton = document.getElementById("next");
+const nextButton = document.getElementById("button-next");
 nextButton.addEventListener("click", event => { next(); });
 
 const clear = () => {
@@ -187,7 +188,7 @@ const clear = () => {
     drawCanvas();
 }
 
-const clearButton = document.getElementById("clear");
+const clearButton = document.getElementById("button-clear");
 clearButton.addEventListener("click", event => { clear(); });
 
 play();
