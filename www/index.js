@@ -115,14 +115,14 @@ function getEventPos(event) {
 canvas.addEventListener("click", event => {
     const pos = getEventPos(event);
     universe.toggle_cell(pos.row, pos.col);
-    drawCanvas();
+    requestAnimationFrame(drawCanvas);
 });
 
 canvas.addEventListener("mousemove", event => {
     if (event.buttons === 1) {
         const pos = getEventPos(event);
         if (universe.set_cell_alive(pos.row, pos.col)) {
-            drawCanvas();
+            requestAnimationFrame(drawCanvas);
         }
     }
 });
@@ -152,8 +152,26 @@ const pause = () => {
     animationId = null;
 };
 
-playPauseButton.addEventListener("click", event => {
-    if (isPaused()) { play(); } else { pause(); }
+const playPause = () => {
+    if (isPaused()) {
+        play();
+    } else {
+        pause();
+    }
+}
+
+playPauseButton.addEventListener("click", event => { playPause(); });
+
+window.addEventListener("keydown", event => {
+    switch (event.code) {
+    case 'Space':
+        playPause();
+        break;
+    case 'KeyN':
+    case 'ArrowRight':
+        event.repeat || next();
+        break;
+    }
 });
 
 const next = () => {
@@ -171,6 +189,5 @@ const clear = () => {
 
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", event => { clear(); });
-
 
 play();
