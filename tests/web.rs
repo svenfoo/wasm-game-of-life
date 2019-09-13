@@ -31,22 +31,32 @@ pub fn expected_spaceship() -> Universe {
 
 #[cfg(test)]
 pub fn empty_universe() -> Universe {
-    let universe = Universe::new(6, 6);
-    universe
+    Universe::new(6, 6)
 }
 
 #[wasm_bindgen_test]
 pub fn test_tick() {
-    let mut input_universe = input_spaceship();
+    let mut universe = input_spaceship();
     let expected_universe = expected_spaceship();
-    input_universe.tick();
-    assert_eq!(&input_universe, &expected_universe);
+    universe.tick();
+    assert_eq!(&universe, &expected_universe);
 }
 
 #[wasm_bindgen_test]
 pub fn test_clear() {
-    let mut input_universe = input_spaceship();
+    let mut universe = input_spaceship();
     let expected_universe = empty_universe();
-    input_universe.clear();
-    assert_eq!(&input_universe, &expected_universe);
+    universe.clear();
+    assert_eq!(&universe, &expected_universe);
+}
+
+#[wasm_bindgen_test]
+pub fn test_set_cell_alive() {
+    let mut universe = empty_universe();
+    // setting a dead cell alive set should return true
+    assert!(universe.set_cell_alive(2, 1));
+    assert!(universe.is_cell_alive(2, 1));
+    // setting an alive cell should return false
+    assert!(! universe.set_cell_alive(2, 1));
+    assert!(universe.is_cell_alive(2, 1));
 }

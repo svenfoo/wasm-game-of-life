@@ -21,6 +21,7 @@ matrix:
     script:
       - wasm-pack build
       - wasm-pack test --firefox --headless
+      - cargo test
 
   # Builds on nightly.
   - rust: nightly

@@ -42,6 +42,8 @@ pub struct Universe {
 
 impl Universe {
     fn get_index(&self, row: u32, column: u32) -> usize {
+        assert!(row < self.height, "row out of bounds");
+        assert!(column < self.width, "column out of bounds");
         (row * self.width + column) as usize
     }
 
@@ -115,6 +117,11 @@ impl Universe {
             let idx = self.get_index(*row, *col);
             self.cells[idx] = Cell::Alive;
         }
+    }
+
+    pub fn is_cell_alive(&self, row: u32, col: u32) -> bool {
+        let idx = self.get_index(row, col);
+        self.cells[idx] == Cell::Alive
     }
 }
 
@@ -207,5 +214,33 @@ impl Universe {
 
     pub fn clear(&mut self) {
         self.cells.iter_mut().map(|i| *i = Cell::Dead).count();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Universe;
+
+    #[test]
+    pub fn test_get_index() {
+        let universe = Universe::new(3, 4);
+        assert_eq!(universe.get_index(0, 0), 0);
+        assert_eq!(universe.get_index(1, 1), 4);
+        assert_eq!(universe.get_index(1, 2), 5);
+        assert_eq!(universe.get_index(3, 2), 11);
+    }
+
+    #[test]
+    #[should_panic(expected="row out of bounds")]
+    pub fn test_row_out_of_bounds() {
+        let universe = Universe::new(6, 6);
+        universe.get_index(6, 1);
+    }
+
+    #[test]
+    #[should_panic(expected="column out of bounds")]
+    pub fn test_column_out_of_bounds() {
+        let universe = Universe::new(6, 6);
+        universe.get_index(1, 6);
     }
 }

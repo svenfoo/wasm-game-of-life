@@ -20,7 +20,7 @@ wasm-pack build
 wasm-pack test --headless --firefox
 ```
 
-### 🔧 Run with `npm run start` in the www folder
+### 🏃 Run with `npm run start` in the www folder
 
 ```
 npm run start
