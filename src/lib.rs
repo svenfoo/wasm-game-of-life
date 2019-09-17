@@ -187,18 +187,25 @@ impl Universe {
         self.cells[idx].set_alive()
     }
 
-    pub fn initialize(&mut self) {
+    fn populate<F>(&mut self, f: F)
+    where
+        F: Fn(usize) -> Cell,
+    {
         for (i, c) in self.cells.iter_mut().enumerate() {
-            if i % 2 == 0 || i % 7 == 0 {
-                *c = Cell::Alive
-            } else {
-                *c = Cell::Dead
-            }
+            *c = f(i);
         }
     }
 
+    pub fn initialize(&mut self) {
+        self.populate(|i| if i % 2 == 0 || i % 7 == 0 {
+            Cell::Alive
+        } else {
+            Cell::Dead
+        });
+    }
+
     pub fn clear(&mut self) {
-        self.cells.iter_mut().map(|i| *i = Cell::Dead).count();
+        self.cells.iter_mut().map(|c| *c = Cell::Dead).count();
     }
 }
 
