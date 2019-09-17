@@ -1,7 +1,9 @@
 mod utils;
 
+use std::convert;
 use std::fmt;
 use std::mem;
+
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -31,6 +33,14 @@ impl Cell {
     }
 }
 
+impl convert::From<bool> for Cell {
+    fn from(v: bool) -> Self {
+        match v {
+            true => Cell::Alive,
+            false => Cell::Dead,
+        }
+    }
+}
 
 #[wasm_bindgen]
 #[derive(Debug, PartialEq, Eq)]
@@ -187,25 +197,22 @@ impl Universe {
         self.cells[idx].set_alive()
     }
 
-    fn populate<F>(&mut self, f: F)
+    fn populate<F, C>(&mut self, f: F)
     where
-        F: Fn(usize) -> Cell,
+        F: Fn(usize) -> C,
+        C: Into<Cell>,
     {
         for (i, c) in self.cells.iter_mut().enumerate() {
-            *c = f(i);
+            *c = f(i).into();
         }
     }
 
-    pub fn initialize(&mut self) {
-        self.populate(|i| if i % 2 == 0 || i % 7 == 0 {
-            Cell::Alive
-        } else {
-            Cell::Dead
-        });
+    pub fn clear(&mut self) {
+        self.populate(|_| Cell::Dead);
     }
 
-    pub fn clear(&mut self) {
-        self.cells.iter_mut().map(|c| *c = Cell::Dead).count();
+    pub fn initialize(&mut self) {
+        self.populate(|i| i % 2 == 0 || i % 7 == 0);
     }
 }
 
