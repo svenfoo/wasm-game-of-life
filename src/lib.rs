@@ -47,50 +47,35 @@ impl Universe {
         (row * self.width + column) as usize
     }
 
+    fn get_cell(&self, row: u32, column: u32) -> &Cell {
+        let index = self.get_index(row, column);
+        &self.cells[index]
+    }
+
+    // returns 1 if the cell is alive, 0 otherwise
+    fn get_cell_value(&self, row: u32, column: u32) -> u8 {
+        let cell = self.get_cell(row, column);
+        *cell as u8
+    }
+
     fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
-        let mut count = 0;
-
         let north = if row == 0 { self.height - 1 } else { row - 1 };
-
         let south = if row == self.height - 1 { 0 } else { row + 1 };
-
         let west = if column == 0 {
             self.width - 1
         } else {
             column - 1
         };
-
         let east = if column == self.width - 1 {
             0
         } else {
             column + 1
         };
 
-        let nw = self.get_index(north, west);
-        count += self.cells[nw] as u8;
-
-        let n = self.get_index(north, column);
-        count += self.cells[n] as u8;
-
-        let ne = self.get_index(north, east);
-        count += self.cells[ne] as u8;
-
-        let w = self.get_index(row, west);
-        count += self.cells[w] as u8;
-
-        let e = self.get_index(row, east);
-        count += self.cells[e] as u8;
-
-        let sw = self.get_index(south, west);
-        count += self.cells[sw] as u8;
-
-        let s = self.get_index(south, column);
-        count += self.cells[s] as u8;
-
-        let se = self.get_index(south, east);
-        count += self.cells[se] as u8;
-
-        count
+        self.get_cell_value(north, west) + self.get_cell_value(north, column) +
+            self.get_cell_value(north, east) + self.get_cell_value(row, west) +
+            self.get_cell_value(row, east) + self.get_cell_value(south, west) +
+            self.get_cell_value(south, column) + self.get_cell_value(south, east)
     }
 }
 
@@ -231,14 +216,14 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected="row out of bounds")]
+    #[should_panic(expected = "row out of bounds")]
     pub fn test_row_out_of_bounds() {
         let universe = Universe::new(6, 6);
         universe.get_index(6, 1);
     }
 
     #[test]
-    #[should_panic(expected="column out of bounds")]
+    #[should_panic(expected = "column out of bounds")]
     pub fn test_column_out_of_bounds() {
         let universe = Universe::new(6, 6);
         universe.get_index(1, 6);

@@ -57,6 +57,6 @@ pub fn test_set_cell_alive() {
     assert!(universe.set_cell_alive(2, 1));
     assert!(universe.is_cell_alive(2, 1));
     // setting an alive cell should return false
-    assert!(! universe.set_cell_alive(2, 1));
+    assert!(!universe.set_cell_alive(2, 1));
     assert!(universe.is_cell_alive(2, 1));
 }
