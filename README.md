@@ -20,13 +20,14 @@ wasm-pack build
 wasm-pack test --headless --firefox
 ```
 
-### 🏃 Run with `npm run start` in the www folder
+### 🏃 Run locally with `npm run start` in the www folder
 
 ```
 npm run start
 ```
+Point your browser to http://localhost:8080
 
-### Deploy to heroku
+### 🚀 Deploy to heroku
 
 ```
 heroku container:login
