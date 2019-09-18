@@ -35,9 +35,10 @@ impl Cell {
 
 impl convert::From<bool> for Cell {
     fn from(v: bool) -> Self {
-        match v {
-            true => Cell::Alive,
-            false => Cell::Dead,
+        if v {
+            Cell::Alive
+        } else {
+            Cell::Dead
         }
     }
 }
@@ -100,7 +101,7 @@ impl fmt::Display for Universe {
                 let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
                 write!(f, "{}", symbol)?;
             }
-            write!(f, "\n")?;
+            writeln!(f)?;
         }
 
         Ok(())
