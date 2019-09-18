@@ -25,3 +25,16 @@ wasm-pack test --headless --firefox
 ```
 npm run start
 ```
+
+### Deploy to heroku
+
+```
+heroku container:login
+heroku container:push web
+heroku container:release web
+heroku open
+```
+
+Optional, after `login`:
+- verify Docker with: `docker ps`
+- create new Heroku project if needed: `heroku create`
