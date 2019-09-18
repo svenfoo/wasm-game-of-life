@@ -142,12 +142,12 @@ const renderLoop = () => {
 const playPauseIcon = document.getElementById("icon-play-pause");
 
 const play = () => {
-    playPauseIcon.textContent = "pause";
+    playPauseIcon.className = "fa fa-pause";
     renderLoop();
 };
 
 const pause = () => {
-    playPauseIcon.textContent = "play_arrow";
+    playPauseIcon.className = "fa fa-play";
     cancelAnimationFrame(animationId);
     animationId = null;
 };
@@ -161,7 +161,7 @@ const playPause = () => {
 }
 
 const playPauseButton = document.getElementById("button-play-pause");
-playPauseButton.addEventListener("click", event => { playPause(); });
+playPauseButton.addEventListener("click", event => { event.preventDefault(); playPause(); });
 
 window.addEventListener("keydown", event => {
     switch (event.code) {
@@ -181,7 +181,7 @@ const next = () => {
 }
 
 const nextButton = document.getElementById("button-next");
-nextButton.addEventListener("click", event => { next(); });
+nextButton.addEventListener("click", event => { event.preventDefault(); next(); });
 
 const clear = () => {
     universe.clear();
@@ -189,6 +189,6 @@ const clear = () => {
 }
 
 const clearButton = document.getElementById("button-clear");
-clearButton.addEventListener("click", event => { clear(); });
+clearButton.addEventListener("click", event => { event.preventDefault(); clear(); });
 
 play();
