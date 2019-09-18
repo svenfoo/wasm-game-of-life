@@ -82,10 +82,14 @@ impl Universe {
             column + 1
         };
 
-        self.get_cell_value(north, west) + self.get_cell_value(north, column) +
-            self.get_cell_value(north, east) + self.get_cell_value(row, west) +
-            self.get_cell_value(row, east) + self.get_cell_value(south, west) +
-            self.get_cell_value(south, column) + self.get_cell_value(south, east)
+        self.get_cell_value(north, west)
+            + self.get_cell_value(north, column)
+            + self.get_cell_value(north, east)
+            + self.get_cell_value(row, west)
+            + self.get_cell_value(row, east)
+            + self.get_cell_value(south, west)
+            + self.get_cell_value(south, column)
+            + self.get_cell_value(south, east)
     }
 }
 
