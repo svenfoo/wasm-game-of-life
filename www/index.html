@@ -6,23 +6,30 @@
     <title>Conway's Game of Life</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- Material Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- TODO: use npm -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   </head>
   <body>
     <main class="main">
       <div class="container">
-        <div class="row justify-content-center pt-3">
-          <div class="col-2">
-            <div class="btn-group-vertical w-100" role="group">
-              <button type="button" class="btn btn-outline-dark" id="button-play-pause">
-                <i class="material-icons md-dark" id="icon-play-pause">play_arrow</i>
-              </button>
-              <button type="button" class="btn btn-outline-dark" id="button-next">Next</button>
-              <button type="button" class="btn btn-outline-dark" id="button-clear">Clear</button>
-            </div>
-          </div>
-          <div class="col-8">
+        <nav class="navbar navbar-expand navbar-light bg-light">
+          <a class="navbar-brand" href="#">Game of Life</a>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="button-play-pause">
+                <i class="fa fa-play" id="icon-play-pause"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="button-next">Next</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="button-clear">Clear</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="row">
+          <div class="col">
             <canvas class="w-100" id="game-of-life-canvas"></canvas>
           </div>
         </div>
