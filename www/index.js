@@ -3,10 +3,16 @@ import { Universe, Cell } from "wasm-game-of-life";
 // Import the WebAssembly memory
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
 
-const CELL_SIZE = 5; // px
+const BORDER_WIDTH = 1; // px
+const MIN_CELL_SIZE = 5; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
+
+let cellSize = MIN_CELL_SIZE; // px
+
+const canvas = document.getElementById("game-of-life-canvas");
+const navBar = document.getElementById("nav-bar");
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new(64, 64);
@@ -16,12 +22,6 @@ const height = universe.height();
 // Initialize it to some interesting state
 universe.initialize();
 
-// Give the canvas room for all of our cells and a 1px border
-// around each of them.
-const canvas = document.getElementById("game-of-life-canvas");
-canvas.height = (CELL_SIZE + 1) * height + 1;
-canvas.width = (CELL_SIZE + 1) * width + 1;
-
 const ctx = canvas.getContext('2d');
 
 const drawGrid = () => {
@@ -30,14 +30,14 @@ const drawGrid = () => {
 
     // Vertical lines.
     for (let i = 0; i <= width; i++) {
-        ctx.moveTo(i * (CELL_SIZE + 1) + 1, 0);
-        ctx.lineTo(i * (CELL_SIZE + 1) + 1, (CELL_SIZE + 1) * height + 1);
+        ctx.moveTo(i * (cellSize + BORDER_WIDTH) + BORDER_WIDTH, 0);
+        ctx.lineTo(i * (cellSize + BORDER_WIDTH) + BORDER_WIDTH, (cellSize + BORDER_WIDTH) * height + BORDER_WIDTH);
     }
 
     // Horizontal lines.
     for (let j = 0; j <= height; j++) {
-        ctx.moveTo(0,                           j * (CELL_SIZE + 1) + 1);
-        ctx.lineTo((CELL_SIZE + 1) * width + 1, j * (CELL_SIZE + 1) + 1);
+        ctx.moveTo(0, j * (cellSize + BORDER_WIDTH) + BORDER_WIDTH);
+        ctx.lineTo((cellSize + BORDER_WIDTH) * width + BORDER_WIDTH, j * (cellSize + BORDER_WIDTH) + BORDER_WIDTH);
     }
 
     ctx.stroke();
@@ -63,10 +63,10 @@ const drawCells = () => {
             }
 
             ctx.fillRect(
-                col * (CELL_SIZE + 1) + 1,
-                row * (CELL_SIZE + 1) + 1,
-                CELL_SIZE,
-                CELL_SIZE
+                col * (cellSize + BORDER_WIDTH) + BORDER_WIDTH,
+                row * (cellSize + BORDER_WIDTH) + BORDER_WIDTH,
+                cellSize,
+                cellSize
             );
         }
     }
@@ -81,10 +81,10 @@ const drawCells = () => {
             }
 
             ctx.fillRect(
-                col * (CELL_SIZE + 1) + 1,
-                row * (CELL_SIZE + 1) + 1,
-                CELL_SIZE,
-                CELL_SIZE
+                col * (cellSize + BORDER_WIDTH) + BORDER_WIDTH,
+                row * (cellSize + BORDER_WIDTH) + BORDER_WIDTH,
+                cellSize,
+                cellSize
             );
         }
     }
@@ -92,7 +92,10 @@ const drawCells = () => {
     ctx.stroke();
 };
 
+
+
 const drawCanvas = () => {
+    resizeCellsIfNeeded();
     drawGrid();
     drawCells();
 };
@@ -106,8 +109,8 @@ function getEventPos(event) {
     const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
     const canvasTop = (event.clientY - boundingRect.top) * scaleY;
 
-    const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
-    const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+    const row = Math.min(Math.floor(canvasTop / (cellSize + BORDER_WIDTH)), height - BORDER_WIDTH);
+    const col = Math.min(Math.floor(canvasLeft / (cellSize + BORDER_WIDTH)), width - BORDER_WIDTH);
 
     return { row: row, col: col };
 };
@@ -162,6 +165,25 @@ const playPause = () => {
 
 const playPauseButton = document.getElementById("button-play-pause");
 playPauseButton.addEventListener("click", event => { event.preventDefault(); playPause(); });
+
+const resizeCellsIfNeeded = () => {
+    let parentWidth = window.innerWidth;
+    let parentHeight = window.innerHeight - navBar.clientHeight;
+    let newCellWidth = Math.floor((parentWidth - (width * BORDER_WIDTH + BORDER_WIDTH)) / width);
+    let newCellHeight = Math.floor((parentHeight - (height * BORDER_WIDTH + BORDER_WIDTH)) / height);
+    let newCellSize = Math.max(Math.min(newCellWidth, newCellHeight), MIN_CELL_SIZE);
+    if (cellSize !== newCellSize) {
+        cellSize = newCellSize;
+        canvas.width = width * (cellSize + BORDER_WIDTH) + BORDER_WIDTH;
+        canvas.height = height * (cellSize + BORDER_WIDTH) + BORDER_WIDTH;
+    };
+}
+
+window.addEventListener("resize", event => {
+    if (isPaused()) {
+        requestAnimationFrame(drawCanvas);
+    }
+});
 
 window.addEventListener("keydown", event => {
     switch (event.code) {
