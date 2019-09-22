@@ -3,3 +3,5 @@
 // that no one else needs to worry about it again.
 import("./index.js")
   .catch(e => console.error("Error importing `index.js`:", e));
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
