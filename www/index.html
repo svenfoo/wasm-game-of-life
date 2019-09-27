@@ -7,27 +7,25 @@
   </head>
   <body>
     <main class="main">
-      <div class="container">
-        <nav class="navbar navbar-expand navbar-light bg-light">
-          <a class="navbar-brand" href="#">Game of Life</a>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="button-play-pause">
-                <i class="fa fa-play" id="icon-play-pause"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="button-next">Next</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="button-clear">Clear</a>
-            </li>
-          </ul>
-        </nav>
-        <div class="row">
-          <div class="col">
-            <canvas class="w-100" id="game-of-life-canvas"></canvas>
-          </div>
+      <nav class="navbar navbar-expand navbar-light bg-light" id="nav-bar">
+        <a class="navbar-brand" href="#">Game of Life</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="button-play-pause">
+              <i class="fa fa-play" id="icon-play-pause"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="button-next">Next</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="button-clear">Clear</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <canvas id="game-of-life-canvas"></canvas>
         </div>
       </div>
     </main>
