@@ -9,7 +9,7 @@ const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
 
-let cellSize = MIN_CELL_SIZE; // px
+let cellSize = 0;
 
 const canvas = document.getElementById("game-of-life-canvas");
 const navBar = document.getElementById("nav-bar");
