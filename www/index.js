@@ -143,13 +143,16 @@ const renderLoop = () => {
 };
 
 const playPauseIcon = document.getElementById("icon-play-pause");
+const playPauseButton = document.getElementById("button-play-pause");
 
 const play = () => {
+    playPauseButton.alt = "Pause";
     playPauseIcon.className = "fa fa-pause";
     renderLoop();
 };
 
 const pause = () => {
+    playPauseButton.alt = "Play";
     playPauseIcon.className = "fa fa-play";
     cancelAnimationFrame(animationId);
     animationId = null;
@@ -163,7 +166,6 @@ const playPause = () => {
     }
 }
 
-const playPauseButton = document.getElementById("button-play-pause");
 playPauseButton.addEventListener("click", event => { event.preventDefault(); playPause(); });
 
 const resizeCellsIfNeeded = () => {
